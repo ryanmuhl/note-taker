@@ -34,14 +34,17 @@ class Store {
         const {title, text} = note
 
         if( !title || !text) {
-            throw new Error("title and text connot be blank")
+            throw new Error("Error Need Text")
         }
         const newNote = {title, text}
 
         return this.getNotes()
         .then(notes => [...notes, newNote])
-        .then(updatedNotes => this.write(updatedNotes))
-        .then(() => this.newNote)
+        .then(updatedNotes =>{
+            this.write(updatedNotes)
+            return updatedNotes
+        })
+       
         
 
     }
