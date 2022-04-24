@@ -40,8 +40,8 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 ## Repository
 https://github.com/ryanmuhl/note-taker
 
-## Screencastify video link
-https://drive.google.com/file/d/1JptehMkJIZIu13Pdoupyr9ZlGXp7Wa7E/view
+## Heroku 
+https://rocky-inlet-13595.herokuapp.com/
 
 ## Contribution
 Created/Designed by Ryan M. Uhl
