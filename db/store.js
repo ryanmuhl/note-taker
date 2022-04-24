@@ -1,6 +1,6 @@
-const { randomUUID } = require("crypto");
 const fs = require("fs");
 const util = require("util")
+const { v4: uuidv4 } = require('uuid');
 
 //promisify f.sreadFile and fs.writeFile using Node util method
 const readFileAsync = util.promisify(fs.readFile)
@@ -36,7 +36,7 @@ class Store {
         if( !title || !text) {
             throw new Error("Error Need Text")
         }
-        const newNote = {title, text}
+        const newNote = {title, text, id: uuidv4()}
 
         return this.getNotes()
         .then(notes => [...notes, newNote])
