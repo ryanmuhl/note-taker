@@ -1,11 +1,17 @@
+//require fs node module to allow interaction with file system
 const fs = require("fs");
-const util = require("util")
-const { v4: uuidv4 } = require('uuid');
 
-//promisify f.sreadFile and fs.writeFile using Node util method
+//require util module 
+const util = require("util")
+
+//require uuid module to create unique ID's
+const uuid = require('../helpers/uuid');
+
+//promisify fs.readFile and fs.writeFile using Node util module
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile);
 
+//Create Store Class (with read, write, getNotes, addNote, removeNote methods)
 class Store {
     read() {
         //read read from db.json file
@@ -36,28 +42,30 @@ class Store {
         if( !title || !text) {
             throw new Error("Error Need Text")
         }
-        const newNote = {title, text, id: uuidv4()}
+        const newNote = {title, text, id: uuid()}
 
         return this.getNotes()
         .then(notes => [...notes, newNote])
-        .then(updatedNotes =>{
-            this.write(updatedNotes)
-            return updatedNotes
+        .then(allNotes =>{
+            this.write(allNotes)
+            return allNotes
         })
        
         
 
     }
 
-    
-    removeNote() {
-
-
+    //remove notes
+    removeNote(id) {
+        return this.getNotes()
+            .then(notes => notes.filter(note => note.id !== id))
+            .then(remainingNotes => this.write(remainingNotes))
     }
 
 
     
 } 
 
+//export store class
 module.exports = new Store()
 
